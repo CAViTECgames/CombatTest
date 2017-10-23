@@ -89,6 +89,7 @@
     <Compile Include="Assets\_Scripts\MouseClick.cs" />
     <Compile Include="Assets\_Scripts\MouseControl.cs" />
     <Compile Include="Assets\_Scripts\MoveWithKeyboard.cs" />
+    <Compile Include="Assets\_Scripts\TestCombat\Characteristic_Bandit.cs" />
     <Compile Include="Assets\_Scripts\TestCombat\Characteristic_Caravan.cs" />
     <Compile Include="Assets\_Scripts\TestCombat\Characteristic_Character.cs" />
     <Compile Include="Assets\_Scripts\TestCombat\Characteristic_Combat_Entity.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Assets\_Scripts\TestCombat\EnterCombat.cs" />
     <Compile Include="Assets\_Scripts\TestCombat\MoverTestCombate.cs" />
     <Compile Include="Assets\_Scripts\TestCombat\NegotiationCollision.cs" />
+    <Compile Include="Assets\_Scripts\TestCombat\SwordCombat.cs" />
     <Compile Include="Assets\_Scripts\TriggerEnemigo.cs" />
     <Compile Include="Assets\_Scripts\UIController.cs" />
     <Compile Include="Assets\_Scripts\rotate.cs" />

@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Characteristic_Combat_Entity : MonoBehaviour
 {
     protected int life, damage_caravan, damage_character; // Daño de los enemigos
     protected int damage_wolf, damage_bandit, damage_negotiator_bandit; // Daño del avatar
     protected int combatcount;  // Contador de tiempo de combate para cada unidad
+    public Text lifetext;
+    public Scrollbar Character_HealthBar;
+    public Text Character_lifetext;
+    protected string unitName;
 
     public int getLife()
     {
@@ -38,8 +43,12 @@ public class Characteristic_Combat_Entity : MonoBehaviour
         life = life - damage;
         if (life <= 0)
         {
+            life = 0;
+            //Character_HealthBar.enabled = false;
+            //Character_lifetext.enabled = false;
             Destroy(this.gameObject);
         }
+       // lifetext.text = "Bandit life: " + life;
     }
 
     public int Do_damage(string target)
