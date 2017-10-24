@@ -8,6 +8,7 @@ public class Characteristic_Combat_Entity : MonoBehaviour
     protected int life, damage_caravan, damage_character; // Daño de los enemigos
     protected int damage_wolf, damage_bandit, damage_negotiator_bandit; // Daño del avatar
     protected int combatcount;  // Contador de tiempo de combate para cada unidad
+    public bool hit;
     public Text lifetext;
     public Scrollbar Character_HealthBar;
     public Text Character_lifetext;
@@ -48,7 +49,7 @@ public class Characteristic_Combat_Entity : MonoBehaviour
             //Character_lifetext.enabled = false;
             Destroy(this.gameObject);
         }
-       // lifetext.text = "Bandit life: " + life;
+        //lifetext.text = unitName + " life: " + life;
     }
 
     public int Do_damage(string target)

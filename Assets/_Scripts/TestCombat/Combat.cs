@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Combat : MonoBehaviour {
 
     public GameObject Wolf;
+    public GameObject Wolf2;
+    public GameObject Wolf3;
     public GameObject Bandit;
     public GameObject Character;
     public GameObject Caravan;
@@ -15,14 +17,19 @@ public class Combat : MonoBehaviour {
     private Transform TargetWolf;
     private Transform TargetBandit;
     private Transform TargetNegotiator_Bandit;
+    private GameObject[] WolfArray;
     private bool hit;
     private int combatcount;
 
     private void Start()
     {
-        //inicializaciones 
+        //inicializaciones
+        WolfArray = GameObject.FindGameObjectsWithTag("Wolf");
+
+        for (int i = 0; i < WolfArray.Length; i++)
+            WolfArray[i].gameObject.SetActive(false);
+
         Texto.gameObject.SetActive(false);
-        Wolf.gameObject.SetActive(false);
         Bandit.gameObject.SetActive(false);
         combatcount = 0;
         hit = false;
@@ -55,11 +62,19 @@ public class Combat : MonoBehaviour {
 
     public void WolfCombatzone()
     {
-        //si acaba de entrar o salir de la zona debe anularse o reactivarse el navegador respectivamente
+        /*
+        for (int i = 0; i < WolfArray.Length; i++)
+        {
+            //si acaba de entrar o salir de la zona debe anularse o reactivarse el navegador respectivamente
+            WolfArray[i].gameObject.GetComponent<GoAndNavigate>().myNav.enabled = !WolfArray[i].gameObject.GetComponent<GoAndNavigate>().myNav.enabled;
+            WolfArray[i].gameObject.GetComponent<GoAndNavigate>().enabled = !WolfArray[i].gameObject.GetComponent<GoAndNavigate>().enabled;
+            WolfArray[i].gameObject.GetComponent<Characteristic_Wolf>().hit = !WolfArray[i].gameObject.GetComponent<Characteristic_Wolf>().hit;
+        }
+        */
         Wolf.gameObject.GetComponent<GoAndNavigate>().myNav.enabled = !Wolf.gameObject.GetComponent<GoAndNavigate>().myNav.enabled;
         Wolf.gameObject.GetComponent<GoAndNavigate>().enabled = !Wolf.gameObject.GetComponent<GoAndNavigate>().enabled;
-        
         hit = !hit;
+
         CombatWolf();
     }
 
@@ -135,30 +150,33 @@ public class Combat : MonoBehaviour {
 
     public void CombatWolf()
     {
-        //si ha pasado el tiempo suficiente y esta en la zona de combate hace daño
-        if (Wolf.gameObject.GetComponent<Characteristic_Wolf>().getCombatCount() > 300 && hit == true)
+        for (int i = 0; i < WolfArray.Length; i++)
         {
-            // muestra el texto de daño
-            Damage.enabled = true;
-            TargetWolf = Wolf.gameObject.GetComponent<GoAndNavigate>().Target;
-
-           // si su target es la caravana pega a la caravana
-            if (TargetWolf.gameObject.CompareTag("Caravana"))
+            //si ha pasado el tiempo suficiente y esta en la zona de combate hace daño
+            if (WolfArray[i].gameObject.GetComponent<Characteristic_Wolf>().getCombatCount() > 300 && hit == true)
             {
-                Caravan.gameObject.GetComponent<GoAndNavigate>().myNav.enabled = false;
-                Caravan.gameObject.GetComponent<GoAndNavigate>().enabled = false;
-                Debug.LogWarning("Caravana Wolf DAMAGE!!");
-                TargetWolf.gameObject.GetComponent<Characteristic_Caravan>().Set_life(
-                    Wolf.gameObject.GetComponent<Characteristic_Wolf>().Do_damage("Caravan"));
+                // muestra el texto de daño
+                Damage.enabled = true;
+                TargetWolf = WolfArray[i].gameObject.GetComponent<GoAndNavigate>().Target;
 
+                // si su target es la caravana pega a la caravana
+                if (TargetWolf.gameObject.CompareTag("Caravana"))
+                {
+                    Caravan.gameObject.GetComponent<GoAndNavigate>().myNav.enabled = false;
+                    Caravan.gameObject.GetComponent<GoAndNavigate>().enabled = false;
+                    Debug.LogWarning("Caravana Wolf DAMAGE!!");
+                    TargetWolf.gameObject.GetComponent<Characteristic_Caravan>().Set_life(
+                        WolfArray[i].gameObject.GetComponent<Characteristic_Wolf>().Do_damage("Caravan"));
+
+                }
+                else
+                {
+                    TargetWolf.gameObject.GetComponent<Characteristic_Character>().Set_life(
+                        WolfArray[i].gameObject.GetComponent<Characteristic_Wolf>().Do_damage("Character"));
+                    Debug.LogWarning("Player Wolf DAMAGE!!");
+                }
+                WolfArray[i].gameObject.GetComponent<Characteristic_Wolf>().setCombatCount(0);
             }
-            else
-            {
-                TargetWolf.gameObject.GetComponent<Characteristic_Character>().Set_life(
-                    Wolf.gameObject.GetComponent<Characteristic_Wolf>().Do_damage("Character"));
-                Debug.LogWarning("Player Wolf DAMAGE!!");
-            }
-            Wolf.gameObject.GetComponent<Characteristic_Wolf>().setCombatCount(0);
         }
     }
 

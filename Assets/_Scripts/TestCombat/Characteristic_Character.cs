@@ -13,6 +13,7 @@ public class Characteristic_Character : Characteristic_Combat_Entity
         damage_wolf = 35;
         damage_bandit = 25;
         damage_negotiator_bandit = 20;
+        unitName = "Character";
     }
 
 }
